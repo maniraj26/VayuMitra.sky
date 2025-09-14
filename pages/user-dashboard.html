@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Drone Delivery</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Drone Delivery</div>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="#" id="logout">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+
+    <main>
+        <div class="dashboard-flex">
+            <div class="address-card">
+                <h1 class="address-title">Address</h1>
+                <input type="text" id="addressInput" placeholder="Enter your address or Plus Code">
+                <button id="getGPSBtn">Get GPS Coordinates</button>
+                <hr>
+                <div class="dd-label"><b>DD (decimal degrees)*</b></div>
+                <label for="latitude">Latitude</label>
+                <input type="number" id="latitude" name="latitude" step="any" required>
+                <label for="longitude">Longitude</label>
+                <input type="number" id="longitude" name="longitude" step="any" required>
+                <button id="getAddressBtn">Get Address</button>
+                <label for="latlong">Lat,Long</label>
+                <input type="text" id="latlong" readonly>
+            </div>
+            <div class="map-card">
+                <iframe id="mapFrame" width="100%" height="400" frameborder="0" style="border:0;border-radius:16px;" allowfullscreen src="https://maps.google.com/maps?q=30.860761,75.863870&z=15&output=embed"></iframe>
+            </div>
+        </div>
+        <div class="order-section">
+            <h2>Place New Order</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="orderType">Order Type:</label>
+                    <select id="orderType" name="orderType" required>
+                        <option value="">Select type</option>
+                        <option value="food">Food</option>
+                        <option value="grocery">Grocery</option>
+                        <option value="medicine">Medicine</option>
+                        <option value="parcel">Parcel</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Order Description:</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                <button type="submit" class="btn">Place Order</button>
+            </form>
+        </div>
+        <div class="order-history">
+            <h3>Order History</h3>
+            <div id="orderList">
+                <!-- Orders will be dynamically populated here -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Drone Delivery Service. All rights reserved.</p>
+    </footer>
+
+    <script src="../js/user-dashboard.js"></script>
+    <script>
+    // Autofill location on page load
+    window.addEventListener('DOMContentLoaded', function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+                document.getElementById('latlong').value = position.coords.latitude + ',' + position.coords.longitude;
+                document.getElementById('mapFrame').src = `https://maps.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}&z=15&output=embed`;
+            });
+        }
+    });
+
+    // Get GPS Coordinates button
+    document.getElementById('getGPSBtn').onclick = function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+                document.getElementById('latlong').value = position.coords.latitude + ',' + position.coords.longitude;
+                document.getElementById('mapFrame').src = `https://maps.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}&z=15&output=embed`;
+            });
+        }
+    };
+
+    // Update LatLong and Map on manual input
+    document.getElementById('latitude').oninput = document.getElementById('longitude').oninput = function() {
+        var lat = document.getElementById('latitude').value;
+        var lng = document.getElementById('longitude').value;
+        document.getElementById('latlong').value = lat + ',' + lng;
+        document.getElementById('mapFrame').src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+    };
+    </script>
+</body>
+</html>
