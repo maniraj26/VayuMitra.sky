@@ -33,7 +33,7 @@
 .address-card button {
     width: 100%;
     padding: 0.7rem;
-    background: #007bff;
+    background: #362525;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -43,7 +43,7 @@
     transition: background 0.2s;
 }
 .address-card button:hover {
-    background: #0056b3;
+    background: #362525;
 }
 .address-card hr {
     margin: 1.5rem 0;
@@ -319,4 +319,5 @@ footer a{
 }
 footer a:hover{
     color: white ;
+
 }
