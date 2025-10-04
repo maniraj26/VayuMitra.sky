@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Delivery - Drone Delivery</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        .dashboard-header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 15px;
+            padding: 10px 0;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .category-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        .category-btn.active {
+            background: #2E7D32;
+        }
+
+        .Medicine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .Medicine-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .Medicine-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .Medicine-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .Medicine-item h3 {
+            margin: 10px 0;
+            color:#0D1B2A;
+        }
+
+        .price {
+            color: #4CAF50;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .cart-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: #f0f0f0;
+            cursor: pointer;
+        }
+
+        .quantity-display {
+            width: 40px;
+            text-align: center;
+        }
+
+        .add-to-cart-btn {
+            background: #0D1B2A;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .add-to-cart-btn:hover {
+            background:#0D1B2A;
+        }
+
+        .cart-summary {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0D1B2A;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">VayuMitra.sky</div>
+            <div class="nav-links">
+                <a href="../../index.html">Home</a>
+                <a href="../cart.html" id="cart">Cart (0)</a>
+                <a href="#" id="logout">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+     <main>
+        <div class="dashboard-header">
+            <h1>Medicine Delivery</h1>
+            <div class="categories">
+                <button class="category-btn active">All</button>
+               
+            </div>
+        </div>
+
+        <div class="Medicine-grid">
+            <!--Medicine -->
+            <div class="Medicine-item" data-category="Indian">
+                
+                <img src="../../medical_images/Hajmola.jpeg" alt="Hajmola">
+                <h3>Hajmola</h3>
+                <p>Hajmola</p>
+                <div class="price">₹60</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="0" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+                <div class="Medicine-item">
+                    <img src="../../medical_images/paracetamol.jpg" alt="Paracetamol">
+                    <h3>Paracetamol</h3>
+                    <p>Paracetamol 500mg</p>
+                    <div class="price">₹10</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="Medicine-item">
+                    <img src="../../medical_images/Vicks vaporub.jpg" alt="Vicks Vaporub">
+                    <h3>Vicks Vaporub</h3>
+                    <p>Vicks Vaporub 50g</p>
+                     <div class="price">₹99</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="Medicine-item">
+                    <img src="../../medical_images/pad.webp" alt="Sanitary Pads">
+                    <h3>Sanitary Pads</h3>
+                    <p>Comfortable and absorbent</p>
+                   <div class="price">₹50</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="Medicine-item">
+                    <img src="../../medical_images/medical kit.jpg" alt="Medicine kit">
+                    <h3>First ad Kit</h3>
+                    <p>Essential medicines and first aid supplies</p>
+                      <div class="price">₹299</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                
+                <div class="Medicine-item">
+                    <img src="../../medical_images/Eno.jpg" alt="Eno">
+                    <h3>Eno</h3>
+                    <p>Fruit salt for instant relief</p>
+                     <div class="price">₹50</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="Medicine-item">
+                    <img src="../../medical_images/Moov" alt="Moov">
+                    <h3>Moov</h3>
+                    <p>Fast relief from muscle pain</p>
+                     <div class="price">₹150</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="Medicine-item">
+                    <img src="../../medical_images/Moov 2" alt="Moov">
+                    <h3>Moov</h3>
+                    <p>Fast relief from muscle pain</p>
+                     <div class="price">₹150</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="Medicine-item">
+                    <img src="../../medical_images/Ors.webp" alt="Ors">
+                    <h3>Ors</h3>
+                    <p>Oral rehydration solution</p>
+                     <div class="price">₹50</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="Medicine-item">
+                    <img src="../../medical_images/omnigel.webp" alt="Omnigel">
+                    <h3>Omnigel</h3>
+                    <p>Mint-flavored gel for pain relief</p>
+                     <div class="price">₹150</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="Medicine-item">
+                    <img src="../../medical_images/inheler.jpg" alt="Inhalers">
+                    <h3>Inhalers</h3>
+                    <p>Fast relief from asthma symptoms</p>
+                     <div class="price">₹150</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                
+
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Drone Delivery Service. All rights reserved.</p>
+    </footer>
+
+    <script src="../../js/services.js"></script>
+</body>
+</html>

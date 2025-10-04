@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Delivery</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        .dashboard-header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 15px;
+            padding: 10px 0;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .category-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        .category-btn.active {
+            background: #2E7D32;
+        }
+
+        .Grocery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .Grocery-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .Grocery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .Grocery-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .Grocery-item h3 {
+            margin: 10px 0;
+            color:#0D1B2A;
+        }
+
+        .price {
+            color: #4CAF50;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .cart-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: #f0f0f0;
+            cursor: pointer;
+        }
+
+        .quantity-display {
+            width: 40px;
+            text-align: center;
+        }
+
+        .add-to-cart-btn {
+            background: #1B263B;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .add-to-cart-btn:hover {
+            background:#0D1B2A;
+        }
+
+        .cart-summary {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0D1B2A;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+    </style>
+
+
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">VayuMitra.sky</div>
+            <div class="nav-links">
+                <a href="../../index.html">Home</a>
+                <a href="../cart.html" id="cart">Cart (0)</a>
+                <a href="#" id="logout">Logout</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="service-container">
+<div class="dashboard-header">
+            <h1>Grocery Delivery</h1>
+            <div class="categories">
+                <button class="category-btn active">All</button>
+                <button class="category-btn">Fresh Produce</button>
+                <button class="category-btn">Dairy & Alternatives</button>
+                <button class="category-btn">Frozen Foods</button>
+                <button class="category-btn">Snacks</button>
+                <button class="category-btn">Personal Care</button>
+            </div>
+        </div>
+
+        <div class="Grocery-grid">
+            <!-- Grocery  Food -->
+            <div class="Grocery-item" data-category="Indian">
+                <img src="../../grocery_images/maggie" alt="Maggi">
+                <h3>Maggi</h3>
+                <p>Good in taste</p>
+                <div class="price">₹29</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="0" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+                <div class="Grocery-item">
+                    <img src="../../grocery_images/kurkure.jpg" alt="kurkure">
+                    <h3>kurukure</h3>
+                    <p>fries and drink</p>
+                    <div class="price">₹15</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                
+                <div class="Grocery-item">
+                    <img src="../../grocery_images/doritos" alt="Doritos">
+                    <h3>Special Doritos</h3>
+                    <p>Flavorful chips with sides</p>
+                   <div class="price">₹29</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="Grocery-item">
+                    <img src="../../grocery_images/jonson soap" alt="jonson's Baby soap">
+                    <h3>jonson's Baby soap</h3>
+                    <p>Fresh and gentle</p>
+                      <div class="price">₹45</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/chocolate" alt="Chocolate">
+                    <h3>Chocolate</h3>
+                    <p>Rich and creamy</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/chocolate2" alt="Chocolate">
+                    <h3>Chocolate</h3>
+                    <p>Rich and creamy</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/coca-cola-cold-drink-1000x1000.webp" alt="coco cola">
+                    <h3>Coca Cola</h3>
+                    <p>Refreshing and fizzy</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sprite-cold-drink--416.jpg" alt="Sprite">
+                    <h3>Sprite</h3>
+                    <p>Refreshing and citrusy</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                 <div class="Grocery-item">
+                    <img src="../../grocery_images/sanpooo" alt="jonson's Baby shampoo">
+                    <h3>jonson's Baby shampoo</h3>
+                    <p>Fresh and gentle</p>
+                     <div class="price">₹199</div>
+                <div class="cart-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1" max="10">
+                    <button class="quantity-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Drone Delivery Service. All rights reserved.</p>
+    </footer>
+
+    <script src="../../js/services.js"></script>
+</body>
+</html>

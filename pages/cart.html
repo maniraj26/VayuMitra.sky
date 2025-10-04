@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cart - WingGo Express</title>
+	<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+	<header>
+		<nav>
+			<div class="logo">VayuMitra.sky</div>
+			<div class="nav-links">
+				<a href="../index.html">Home</a>
+				<a href="user-dashboard.html">Dashboard</a>
+			</div>
+		</nav>
+	</header>
+	<main>
+		<div class="cart-container">
+			<h2 class="cart-title">Your Cart</h2>
+			<div class="cart-list" id="cartList"></div>
+			<div class="cart-total" id="cartTotal"></div>
+			<button class="pay-btn" id="addAddressBtn" style="background:#0D1B2A;margin-bottom:1rem;">Add Address</button>
+			<button class="pay-btn" id="payBtn">Pay</button>
+		</div>
+		</div>
+	</main>
+	<footer>
+		<p>&copy; 2025 VayuMitra.sky. All rights reserved.</p>
+	</footer>
+	<script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+	<script src="../js/cart.js"></script>
+	<script>
+	document.getElementById('addAddressBtn').onclick = function() {
+		// Save cart to localStorage (already done), then redirect to dashboard
+		window.location.href = 'user-dashboard.html?showOrderSummary=1';
+	};
+	</script>
+</body>
+</html>

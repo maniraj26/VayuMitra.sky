@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Drone Delivery</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">VayuMitra.sky</div>
+            <div class="nav-links">
+                <a href="profile.html" id="adminProfile">Profile</a>
+                <a href="#" id="logout">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <h2>Order Management</h2>
+            <div class="order-filters">
+                <button class="btn" data-filter="pending">Pending Orders</button>
+                <button class="btn" data-filter="approved">Approved Orders</button>
+                <button class="btn" data-filter="completed">Completed Orders</button>
+            </div>
+
+            <div class="orders-list" id="ordersList">
+                <!-- Orders will be dynamically populated here -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Drone Delivery Service. All rights reserved.</p>
+    </footer>
+
+    <script src="../js/admin-dashboard.js"></script>
+</body>
+</html>

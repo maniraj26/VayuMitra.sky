@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Drone Delivery</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">VayuMitra.sky</div>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="#" id="logout">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+
+    <main>
+        <div class="dashboard-flex">
+            <div class="address-card">
+                <h1 class="address-title">Address</h1>
+                <input type="text" id="addressInput" placeholder="Enter your address or Plus Code">
+                <button id="getGPSBtn">Get Address</button>
+                <hr>
+                <div class="dd-label"><b>DD (decimal degrees)*</b></div>
+                <label for="latitude">Latitude</label>
+                <input type="number" id="latitude" name="latitude" step="any" required>
+                <label for="longitude">Longitude</label>
+                <input type="number" id="longitude" name="longitude" step="any" required>
+                <button id="getAddressBtn">Get GPS Coordinates</button>
+                <label for="latlong">Lat,Long</label>
+                <input type="text" id="latlong" readonly>
+
+                <!-- Order summary from cart -->
+                <div id="cartOrderSummary" style="margin-top:2rem;display:none;"></div>
+                <button id="cartPayBtn" class="btn" style="display:none;margin-top:1rem;">Pay</button>
+                <div id="cartQrSection" style="text-align:center;margin-top:1rem;display:none;"></div>
+                <button id="placeOrderBtn" class="btn" style="display:none;margin-top:1rem;background:#1B263B;color:#fff;">Place Order</button>
+            </div>
+            <div class="map-card">
+                <iframe id="mapFrame" width="100%" height="400" frameborder="0" style="border:0;border-radius:16px;" allowfullscreen src="https://maps.google.com/maps?q=30.860761,75.863870&z=15&output=embed"></iframe>
+            </div>
+        </div>
+        
+        </div>
+        <div class="order-history">
+            <h3>Order History</h3>
+            <div id="orderList">
+                <!-- Orders will be dynamically populated here -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Drone Delivery Service. All rights reserved.</p>
+    </footer>
+
+    <script src="../js/user-dashboard.js"></script>
+    <script>
+    // Show cart order summary if redirected from cart.html
+    function showCartOrderSummary() {
+        const params = new URLSearchParams(window.location.search);
+        if (!params.get('showOrderSummary')) return;
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if (cart.length === 0) return;
+        const summaryDiv = document.getElementById('cartOrderSummary');
+        let html = '<h3>Order Summary</h3>';
+        html += cart.map(item => `<div class="cart-item"><span>${item.name}</span> <span>₹${item.price} x ${item.quantity || 1}</span></div>`).join('');
+        const total = cart.reduce((sum, item) => sum + (parseFloat(item.price) * (item.quantity || 1)), 0);
+        html += `<div class="cart-total">Total: ₹${total.toFixed(2)}</div>`;
+        summaryDiv.innerHTML = html;
+        summaryDiv.style.display = 'block';
+        document.getElementById('cartPayBtn').style.display = 'inline-block';
+    }
+
+    showCartOrderSummary();
+
+    // Payment QR code logic
+    document.getElementById('cartPayBtn').onclick = function() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const total = cart.reduce((sum, item) => sum + (parseFloat(item.price) * (item.quantity || 1)), 0);
+        const qrSection = document.getElementById('cartQrSection');
+        qrSection.innerHTML = `
+            <h3>Scan to Pay</h3>
+            <img src="../payment QR code.jpg" alt="Payment QR Code" style="max-width:300px; border-radius:16px; box-shadow:0 2px 8px #ccc;">
+            <div style="margin-top:8px; font-size:16px; color:#444;">UPI ID: maniraj8540-1@okaxis</div>
+            <div style="margin-top:4px; font-size:14px; color:#888;">Scan to pay with any UPI app</div>
+            <div style="margin-top:8px; font-size:18px; color:#222; font-weight:bold;">Amount to Pay: ₹${total.toFixed(2)}</div>
+        `;
+        qrSection.style.display = 'block';
+        document.getElementById('placeOrderBtn').style.display = 'inline-block';
+    };
+
+    // Place Order button logic
+    document.getElementById('placeOrderBtn').onclick = function() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const total = cart.reduce((sum, item) => sum + (parseFloat(item.price) * (item.quantity || 1)), 0);
+        const address = document.getElementById('addressInput').value.trim();
+        const latitude = document.getElementById('latitude').value;
+        const longitude = document.getElementById('longitude').value;
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        let userOrderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+        let summary = '\n--- Order Summary ---\n';
+        summary += cart.map(item => `${item.name} - ₹${item.price} x ${item.quantity || 1}`).join('\n');
+        summary += `\nTotal: ₹${total.toFixed(2)}`;
+        summary += '\n--- Payment ---\nPaid via QR code (maniraj8540-1@okaxis)';
+        const newOrder = {
+            id: Date.now(),
+            userId: currentUser ? currentUser.email : 'guest',
+            orderType: 'cart',
+            description: `Address: ${address}\n${summary}`,
+            location: {
+                latitude,
+                longitude
+            },
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        };
+        orders.push(newOrder);
+        localStorage.setItem('orders', JSON.stringify(orders));
+        // Save to user order history
+        userOrderHistory.push(newOrder);
+        localStorage.setItem('orderHistory', JSON.stringify(userOrderHistory));
+        alert('Order placed! Your details have been sent to the admin.');
+        localStorage.removeItem('cart');
+        window.location.href = 'user-dashboard.html';
+    };
+    </script>
+    <script>
+    // Autofill location on page load
+    window.addEventListener('DOMContentLoaded', function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+                document.getElementById('latlong').value = position.coords.latitude + ',' + position.coords.longitude;
+                document.getElementById('mapFrame').src = `https://maps.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}&z=15&output=embed`;
+            });
+        }
+    });
+
+    // Get GPS Coordinates button
+    document.getElementById('getGPSBtn').onclick = function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+                document.getElementById('latlong').value = position.coords.latitude + ',' + position.coords.longitude;
+                document.getElementById('mapFrame').src = `https://maps.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}&z=15&output=embed`;
+            });
+        }
+    };
+
+    // Update LatLong and Map on manual input
+    document.getElementById('latitude').oninput = document.getElementById('longitude').oninput = function() {
+        var lat = document.getElementById('latitude').value;
+        var lng = document.getElementById('longitude').value;
+        document.getElementById('latlong').value = lat + ',' + lng;
+        document.getElementById('mapFrame').src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+    };
+    </script>
+    <script>
+    // Show user order history
+window.addEventListener('DOMContentLoaded', function() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const orderList = document.getElementById('orderList');
+    let userOrderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+    if (currentUser) {
+        userOrderHistory = userOrderHistory.filter(order => order.userId === currentUser.email);
+    }
+    if (orderList) {
+        orderList.innerHTML = userOrderHistory.length === 0
+            ? '<p>No orders yet.</p>'
+            : userOrderHistory.map(order => `
+                <div class="order-item">
+                    <strong>${order.createdAt.slice(0,10)}:</strong> ${order.description.replace(/\n/g,'<br>')}
+                </div>
+            `).join('');
+    }
+});
+    </script>
+</body>
+</html>
